@@ -17,6 +17,7 @@ import { populatePublishedAt } from "@/payload/hooks/populate-published-at";
 import { heroField } from "@/module/pages/blocks/hero/hero-config";
 import { MediaBlockConfig } from "@/payload/blocks/media/media-block-config";
 import { ContentWithImageConfig } from "@/module/pages/blocks/content-with-image/content-with-image-config";
+import { TimelineConfig } from "@/module/pages/blocks/timeline/timeline-config";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -69,7 +70,11 @@ export const Pages: CollectionConfig<"pages"> = {
             {
               name: "layout",
               type: "blocks",
-              blocks: [MediaBlockConfig, ContentWithImageConfig],
+              blocks: [
+                MediaBlockConfig,
+                ContentWithImageConfig,
+                TimelineConfig,
+              ],
               required: true,
               admin: {
                 initCollapsed: true,

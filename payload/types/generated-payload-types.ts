@@ -203,7 +203,7 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (MediaBlock | ContentWithImageBlock)[];
+  layout: (MediaBlock | ContentWithImageBlock | TimelineBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -477,6 +477,38 @@ export interface ContentWithImageBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'contentWithImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlock".
+ */
+export interface TimelineBlock {
+  sectionTitle?: string | null;
+  title: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  items: {
+    icon: string | Media;
+    year: string;
+    description: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'timeline';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -958,6 +990,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         mediaBlock?: T | MediaBlockSelect<T>;
         contentWithImage?: T | ContentWithImageBlockSelect<T>;
+        timeline?: T | TimelineBlockSelect<T>;
       };
   meta?:
     | T
@@ -992,6 +1025,25 @@ export interface ContentWithImageBlockSelect<T extends boolean = true> {
   richText?: T;
   media?: T;
   mediaPosition?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlock_select".
+ */
+export interface TimelineBlockSelect<T extends boolean = true> {
+  sectionTitle?: T;
+  title?: T;
+  description?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        year?: T;
+        description?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

@@ -3,10 +3,12 @@ import React, { Fragment } from "react";
 import type { Page } from "@/payload/types/generated-payload-types";
 import { CMSMediaBlock } from "./media/cms-media-block";
 import { CMSContentWithImageServer } from "@/module/pages/blocks/content-with-image/content-with-image-server";
+import { CMSTimelineServer } from "@/module/pages/blocks/timeline/timeline-server";
 
 const blockComponents = {
   mediaBlock: CMSMediaBlock,
   contentWithImage: CMSContentWithImageServer,
+  timeline: CMSTimelineServer,
 };
 
 export const RenderBlocks: React.FC<{

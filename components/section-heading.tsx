@@ -7,6 +7,7 @@ export interface SectionHeadingProps {
   className?: string;
   sectionTitleClassName?: string;
   titleClassName?: string;
+  wrapperClassName?: string;
 }
 
 export const SectionHeading: React.FC<SectionHeadingProps> = ({
@@ -15,15 +16,16 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   className,
   sectionTitleClassName,
   titleClassName,
+  wrapperClassName,
 }) => {
   if (!sectionTitle && !title) return null;
 
   return (
-    <div className={cn("flex flex-col gap-3", className)}>
+    <div className={cn("flex flex-col gap-3", wrapperClassName || className)}>
       {sectionTitle && (
         <p
           className={cn(
-            "text-primary font-bold text-sm md:text-base  tracking-wide",
+            "text-primary font-bold text-sm md:text-base tracking-wide",
             sectionTitleClassName
           )}
         >
