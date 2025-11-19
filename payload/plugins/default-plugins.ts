@@ -15,7 +15,7 @@ import { revalidateRedirects } from "../hooks/revalidate-redirects";
 import { getServerSideURL } from "@/lib/get-url";
 import { beforeSyncWithSearch } from "./serach/before-sync";
 import { searchFields } from "./serach/field-overrides";
-import { Page, Post } from "@/payload-types";
+import { Page, Post } from "@/payload/types/generated-payload-types";
 
 const generateTitle: GenerateTitle<Page | Post> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Olsen Ziegler` : "Olsen Ziegler";
