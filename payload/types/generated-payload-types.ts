@@ -203,7 +203,7 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: MediaBlock[];
+  layout: (MediaBlock | ContentWithImageBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -449,6 +449,34 @@ export interface MediaBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithImageBlock".
+ */
+export interface ContentWithImageBlock {
+  sectionTitle: string;
+  title: string;
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  media: string | Media;
+  mediaPosition?: ('left' | 'right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentWithImage';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -929,6 +957,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         mediaBlock?: T | MediaBlockSelect<T>;
+        contentWithImage?: T | ContentWithImageBlockSelect<T>;
       };
   meta?:
     | T
@@ -950,6 +979,19 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithImageBlock_select".
+ */
+export interface ContentWithImageBlockSelect<T extends boolean = true> {
+  sectionTitle?: T;
+  title?: T;
+  richText?: T;
+  media?: T;
+  mediaPosition?: T;
   id?: T;
   blockName?: T;
 }

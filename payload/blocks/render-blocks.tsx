@@ -2,9 +2,11 @@ import React, { Fragment } from "react";
 
 import type { Page } from "@/payload/types/generated-payload-types";
 import { CMSMediaBlock } from "./media/cms-media-block";
+import { CMSContentWithImageServer } from "@/module/pages/blocks/content-with-image/content-with-image-server";
 
 const blockComponents = {
   mediaBlock: CMSMediaBlock,
+  contentWithImage: CMSContentWithImageServer,
 };
 
 export const RenderBlocks: React.FC<{
@@ -25,8 +27,9 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={index}>
-                  <Block {...block} disableInnerContainer />
+                <div key={index}>
+                  {/* @ts-ignore */}
+                  <Block {...block} />
                 </div>
               );
             }

@@ -38,9 +38,8 @@ export default async function Page({ params }: Props) {
   }
 
   return (
-    <div>
-      <h1>{page.title}</h1>
+    <>
       <RenderBlocks blocks={page.layout} />
-    </div>
+    </>
   );
 }
