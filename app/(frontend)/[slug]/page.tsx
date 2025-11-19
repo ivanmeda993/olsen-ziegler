@@ -2,7 +2,7 @@ import {
   generatePagesMetadata,
   generatePagesStaticParams,
   getPageBySlug,
-} from "@/payload/schemas/collections/pages/api/get-page";
+} from "@/module/pages/api/get-page";
 import { Metadata } from "next";
 import { RequiredDataFromCollectionSlug } from "payload";
 

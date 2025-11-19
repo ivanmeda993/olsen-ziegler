@@ -13,8 +13,8 @@ import {
 import { authenticated } from "@/payload/access/authenticated";
 import { authenticatedOrPublished } from "@/payload/access/authenticatedOrPublished";
 import { generatePreviewPath } from "@/lib/generate-preview-path";
-import { heroField } from "@/payload/blocks/hero/hero-config";
 import { populatePublishedAt } from "@/payload/hooks/populate-published-at";
+import { heroField } from "@/module/pages/blocks/hero/hero-config";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
