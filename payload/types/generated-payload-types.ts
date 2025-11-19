@@ -193,7 +193,7 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: unknown[];
+  layout: MediaBlock[];
   meta?: {
     title?: string | null;
     /**
@@ -429,6 +429,16 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -904,7 +914,11 @@ export interface PagesSelect<T extends boolean = true> {
             };
         media?: T;
       };
-  layout?: T | {};
+  layout?:
+    | T
+    | {
+        mediaBlock?: T | MediaBlockSelect<T>;
+      };
   meta?:
     | T
     | {
@@ -918,6 +932,15 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock_select".
+ */
+export interface MediaBlockSelect<T extends boolean = true> {
+  media?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

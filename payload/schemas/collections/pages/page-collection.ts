@@ -15,6 +15,7 @@ import { authenticatedOrPublished } from "@/payload/access/authenticatedOrPublis
 import { generatePreviewPath } from "@/lib/generate-preview-path";
 import { populatePublishedAt } from "@/payload/hooks/populate-published-at";
 import { heroField } from "@/module/pages/blocks/hero/hero-config";
+import { MediaBlockConfig } from "@/payload/blocks/media/media-block-config";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -67,7 +68,7 @@ export const Pages: CollectionConfig<"pages"> = {
             {
               name: "layout",
               type: "blocks",
-              blocks: [],
+              blocks: [MediaBlockConfig],
               required: true,
               admin: {
                 initCollapsed: true,
