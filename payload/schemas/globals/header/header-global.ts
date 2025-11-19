@@ -10,15 +10,22 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: "logo",
+      type: "upload",
+      relationTo: "media",
+      required: true,
+    },
+    {
       name: "navItems",
       type: "array",
-      fields: [
-        linkField({
-          appearances: false,
-        }),
-      ],
+      fields: [linkField({})],
       maxRows: 6,
     },
+    linkField({
+      overrides: {
+        name: "cta",
+      },
+    }),
   ],
   hooks: {
     afterChange: [revalidateHeader],

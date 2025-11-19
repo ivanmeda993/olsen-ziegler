@@ -192,7 +192,11 @@ export interface Page {
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('default' | 'outline') | null;
+            appearance?: ('default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link') | null;
+            /**
+             * Choose the size of the link.
+             */
+            size?: ('default' | 'sm' | 'lg' | 'icon' | 'icon-sm' | 'icon-lg') | null;
           };
           id?: string | null;
         }[]
@@ -915,6 +919,7 @@ export interface PagesSelect<T extends boolean = true> {
                     url?: T;
                     label?: T;
                     appearance?: T;
+                    size?: T;
                   };
               id?: T;
             };
@@ -1407,6 +1412,7 @@ export interface SiteConfig {
  */
 export interface Header {
   id: string;
+  logo: string | Media;
   navItems?:
     | {
         link: {
@@ -1423,10 +1429,41 @@ export interface Header {
               } | null);
           url?: string | null;
           label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link') | null;
+          /**
+           * Choose the size of the link.
+           */
+          size?: ('default' | 'sm' | 'lg' | 'icon' | 'icon-sm' | 'icon-lg') | null;
         };
         id?: string | null;
       }[]
     | null;
+  cta: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link') | null;
+    /**
+     * Choose the size of the link.
+     */
+    size?: ('default' | 'sm' | 'lg' | 'icon' | 'icon-sm' | 'icon-lg') | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1445,6 +1482,7 @@ export interface SiteConfigSelect<T extends boolean = true> {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
   navItems?:
     | T
     | {
@@ -1456,8 +1494,21 @@ export interface HeaderSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              appearance?: T;
+              size?: T;
             };
         id?: T;
+      };
+  cta?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+        size?: T;
       };
   updatedAt?: T;
   createdAt?: T;

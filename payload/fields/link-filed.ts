@@ -1,30 +1,34 @@
+import { createOptionsFromArray } from "@/lib/create-options-from-array";
 import deepMerge from "@/lib/deep-merge";
 import type { Field, GroupField } from "payload";
 
-export type LinkAppearances = "default" | "outline";
+// Dynamically extract variant options from buttonVariants
+export const appearanceOptions = createOptionsFromArray([
+  "default",
+  "destructive",
+  "outline",
+  "secondary",
+  "ghost",
+  "link",
+]);
 
-export const appearanceOptions: Record<
-  LinkAppearances,
-  { label: string; value: string }
-> = {
-  default: {
-    label: "Default",
-    value: "default",
-  },
-  outline: {
-    label: "Outline",
-    value: "outline",
-  },
-};
+export const sizeOptions = createOptionsFromArray([
+  "default",
+  "sm",
+  "lg",
+  "icon",
+  "icon-sm",
+  "icon-lg",
+]);
 
 type LinkType = (options?: {
-  appearances?: LinkAppearances[] | false;
+  appearances?: boolean;
   disableLabel?: boolean;
   overrides?: Partial<GroupField>;
 }) => Field;
 
 export const linkField: LinkType = ({
-  appearances,
+  appearances = true,
   disableLabel = false,
   overrides = {},
 } = {}) => {
@@ -124,26 +128,49 @@ export const linkField: LinkType = ({
   }
 
   if (appearances !== false) {
-    let appearanceOptionsToUse = [
-      appearanceOptions.default,
-      appearanceOptions.outline,
-    ];
-
-    if (appearances) {
-      appearanceOptionsToUse = appearances.map(
-        (appearance) => appearanceOptions[appearance]
+    // When appearances is true, add both appearance and size fields
+    if (appearances === true) {
+      linkResult.fields.push({
+        type: "row",
+        fields: [
+          {
+            name: "appearance",
+            type: "select",
+            admin: {
+              description: "Choose how the link should be rendered.",
+              width: "50%",
+            },
+            defaultValue: "default",
+            options: appearanceOptions,
+          },
+          {
+            name: "size",
+            type: "select",
+            admin: {
+              description: "Choose the size of the link.",
+              width: "50%",
+            },
+            defaultValue: "default",
+            options: sizeOptions,
+          },
+        ],
+      });
+    } else {
+      // Default behavior: only show 'default' and 'outline' appearance options
+      const defaultAppearanceOptions = appearanceOptions.filter(
+        (opt) => opt.value === "default" || opt.value === "outline"
       );
-    }
 
-    linkResult.fields.push({
-      name: "appearance",
-      type: "select",
-      admin: {
-        description: "Choose how the link should be rendered.",
-      },
-      defaultValue: "default",
-      options: appearanceOptionsToUse,
-    });
+      linkResult.fields.push({
+        name: "appearance",
+        type: "select",
+        admin: {
+          description: "Choose how the link should be rendered.",
+        },
+        defaultValue: "default",
+        options: defaultAppearanceOptions,
+      });
+    }
   }
 
   return deepMerge(linkResult, overrides);
