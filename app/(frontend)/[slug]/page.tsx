@@ -3,6 +3,7 @@ import {
   generatePagesStaticParams,
   getPageBySlug,
 } from "@/module/pages/api/get-page";
+import { RenderBlocks } from "@/payload/blocks/render-blocks";
 import { Metadata } from "next";
 import { RequiredDataFromCollectionSlug } from "payload";
 
@@ -36,5 +37,10 @@ export default async function Page({ params }: Props) {
     return <div>Page not found</div>;
   }
 
-  return <div>{page.title}</div>;
+  return (
+    <div>
+      <h1>{page.title}</h1>
+      <RenderBlocks blocks={page.layout} />
+    </div>
+  );
 }

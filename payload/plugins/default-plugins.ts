@@ -16,6 +16,7 @@ import { getServerSideURL } from "@/lib/get-url";
 import { beforeSyncWithSearch } from "./serach/before-sync";
 import { searchFields } from "./serach/field-overrides";
 import { Page, Post } from "@/payload/types/generated-payload-types";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 
 const generateTitle: GenerateTitle<Page | Post> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Olsen Ziegler` : "Olsen Ziegler";
@@ -95,5 +96,15 @@ export const defaultPlugins: Plugin[] = [
         return [...defaultFields, ...searchFields];
       },
     },
+  }),
+  vercelBlobStorage({
+    enabled: true, // Optional, defaults to true
+    // Specify which collections should use Vercel Blob
+    collections: {
+      media: true,
+    },
+    clientUploads: true,
+    // Token provided by Vercel once Blob storage is added to your Vercel project
+    token: process.env.BLOB_READ_WRITE_TOKEN,
   }),
 ];
