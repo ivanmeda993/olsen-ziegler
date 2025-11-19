@@ -13,6 +13,8 @@ import { Media } from "./payload/schemas/collections/media/media-collection";
 import { Pages } from "./payload/schemas/collections/pages/page-collection";
 import { Categories } from "./payload/schemas/collections/categories/categories-collection";
 import { Posts } from "./payload/schemas/collections/posts/post-collection";
+import { Header } from "./payload/schemas/globals/header/header-global";
+import { SiteConfig } from "./payload/schemas/globals/site-config/site-config-globals";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -53,7 +55,7 @@ export default buildConfig({
   }),
   collections: [Pages, Users, Posts, Media, Categories],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [],
+  globals: [SiteConfig, Header],
   plugins: [
     ...defaultPlugins,
     // storage-adapter-placeholder

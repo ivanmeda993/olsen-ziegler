@@ -108,8 +108,14 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-config': SiteConfig;
+    header: Header;
+  };
+  globalsSelect: {
+    'site-config': SiteConfigSelect<false> | SiteConfigSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -1384,6 +1390,78 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-config".
+ */
+export interface SiteConfig {
+  id: string;
+  logo: string | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  navItems?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: string | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-config_select".
+ */
+export interface SiteConfigSelect<T extends boolean = true> {
+  logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
